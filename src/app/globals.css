@@ -3367,3 +3367,182 @@ input::placeholder {
     font-size: 10px;
   }
 }
+/* Useful context follows the code tool; it never displaces the first action. */
+.home-context {
+  margin-top: 39px;
+  padding-top: 29px;
+  border-top: 1px solid #ded2ec;
+}
+.context-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 43px;
+}
+.context-block h2,
+.owner-experience h2,
+.source-summary h2 {
+  font-family: var(--display);
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  color: #49325e;
+  margin: 0 0 16px;
+}
+.context-block p,
+.owner-experience-body p,
+.source-summary p,
+.source-summary li {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #72617e;
+  margin: 12px 0;
+  max-width: 74ch;
+}
+.home-context a {
+  color: #6941e0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #cbb7e7;
+}
+.home-context a:hover {
+  text-decoration-color: #6941e0;
+}
+.context-status-list {
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(125px, auto) 1fr;
+  gap: 10px 14px;
+  font-size: 11px;
+  line-height: 1.75;
+}
+.context-status-list dt {
+  color: #695278;
+  font-weight: 700;
+  margin: 0;
+}
+.context-status-list dd {
+  color: #7d6b89;
+  margin: 0;
+}
+.owner-experience {
+  margin-top: 31px;
+  padding: 26px 29px;
+  background: #fffefd;
+  border: 1px solid #ded0ef;
+  border-left: 4px solid #a384d5;
+  border-radius: 4px 13px 13px 4px;
+}
+.owner-experience-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  font-size: 10px;
+  color: #826992;
+}
+.owner-experience-heading > span {
+  font-weight: 700;
+  color: #795996;
+}
+.owner-experience-heading time {
+  white-space: nowrap;
+}
+.owner-experience-body p {
+  max-width: 95ch;
+}
+.owner-experience-body p:last-child {
+  margin-bottom: 0;
+}
+.owner-experience .context-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  margin-top: 4px;
+}
+.source-summary {
+  margin-top: 29px;
+  padding-top: 24px;
+  border-top: 1px solid #ded2ec;
+}
+.source-summary h2 {
+  font-size: 21px;
+  margin-bottom: 13px;
+}
+.source-lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.source-summary .source-lines li {
+  font-size: 11px;
+  line-height: 1.85;
+  margin: 0;
+}
+.source-lines strong {
+  display: block;
+  color: #654978;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+@media (max-width: 760px) {
+  .home-context {
+    margin-top: 30px;
+    padding-top: 25px;
+  }
+  .context-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .context-block h2,
+  .owner-experience h2 {
+    font-size: 24px;
+  }
+  .context-block p,
+  .owner-experience-body p,
+  .source-summary p {
+    font-size: 12px;
+    line-height: 1.9;
+  }
+  .context-status-list {
+    grid-template-columns: 1fr;
+    gap: 3px;
+    font-size: 11px;
+  }
+  .context-status-list dd {
+    margin-bottom: 9px;
+  }
+  .owner-experience {
+    margin-top: 25px;
+    padding: 22px 19px;
+  }
+  .owner-experience-heading {
+    gap: 7px;
+    font-size: 10px;
+  }
+  .source-summary {
+    margin-top: 24px;
+    padding-top: 22px;
+  }
+  .source-lines {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .source-summary h2 {
+    font-size: 22px;
+  }
+  .source-summary .source-lines li {
+    font-size: 12px;
+  }
+  .source-lines strong {
+    font-size: 13px;
+  }
+}

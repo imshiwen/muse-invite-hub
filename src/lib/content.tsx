@@ -75,22 +75,26 @@ export const CONTENT_PAGES = {
 
         <section aria-labelledby="redeem-steps">
           <h2 id="redeem-steps">Steps to try</h2>
-          <p>Menu labels may vary by platform and version; follow the prompts in Muse.</p>
+          <p>
+            Menu labels may vary by platform and version; follow the prompts in
+            Muse.
+          </p>
           <ol className="steps">
             <li>
               Open Muse in the app or on the official Muse site and confirm that
               you are signed in to an account that can use Muse.
             </li>
             <li>
-              Look in the current settings for an invite-code redemption
-              option. One previously reported route is <strong>Settings →
-              General → Redeem Invite Code</strong>. Menu labels may vary by
-              platform and version; follow the prompts in Muse.
+              Look in the current settings for an invite-code redemption option.
+              One previously reported route is{" "}
+              <strong>Settings → General → Redeem Invite Code</strong>. Menu
+              labels may vary by platform and version; follow the prompts in
+              Muse.
             </li>
             <li>
-              Copy a code from the <a href="/">public code list</a>, enter it
-              in Muse, and rely on Muse’s own response to tell you whether it
-              was accepted.
+              Copy a code from the <a href="/">public code list</a>, enter it in
+              Muse, and rely on Muse’s own response to tell you whether it was
+              accepted.
             </li>
             <li>
               If the app rejects it, you can leave a “Didn’t work” report here.
@@ -106,8 +110,8 @@ export const CONTENT_PAGES = {
             Community reports mention a 48-hour redemption window after joining,
             up to 1 billion tokens for each side, up to 30 uses per code, and
             one reward per recipient. These rules are unverified, the event that
-            starts the 48-hour window is unclear, and terms may change or vary by
-            account.
+            starts the 48-hour window is unclear, and terms may change or vary
+            by account.
           </p>
           {communityRulesNotice}
           <p>
@@ -140,7 +144,8 @@ export const CONTENT_PAGES = {
     ),
   },
   "how-to-register": {
-    title: "How to Join Muse: Official Entry and Invite Codes | Muse Invite Hub",
+    title:
+      "How to Join Muse: Official Entry and Invite Codes | Muse Invite Hub",
     description:
       "Find Muse’s official entry point, understand the difference between joining and redeeming a reward code, and read one clearly labeled owner-reported experience.",
     heading: "How to join Muse",
@@ -174,8 +179,9 @@ export const CONTENT_PAGES = {
             </li>
             <li>
               Follow the sign-in, availability, waitlist, or verification steps
-              that Muse currently presents. Meta’s announcement does not document
-              every screen or guarantee access for every account or region.
+              that Muse currently presents. Meta’s announcement does not
+              document every screen or guarantee access for every account or
+              region.
             </li>
             <li>
               Use accurate information for any age, identity, or account
@@ -201,7 +207,9 @@ export const CONTENT_PAGES = {
           <h2 id="owner-experience">Community-reported experience</h2>
           <div className="callout">
             <p>
-              <strong>Site owner’s first-hand experience — September 28, 2026</strong>
+              <strong>
+                Site owner’s first-hand experience — September 28, 2026
+              </strong>
             </p>
             <p>
               <strong>Source:</strong> The site owner’s own report.{" "}
@@ -209,15 +217,32 @@ export const CONTENT_PAGES = {
               independently verified or repeated.
             </p>
             <p>
-              On September 28, 2026, I signed in to my existing, waitlisted Muse
-              account through{" "}
-              <a href={LEXMOUNT_URL} target="_blank" rel="noreferrer">
-                Lexmount Browser
-              </a>
-              , a third-party cloud browser. After I completed the verification
-              Muse showed and sent a message in the web session, I found that the
-              same account could also use the iOS app.
+              On September 28, 2026, I used the following sequence with the Muse
+              account that had entered the waitlist the day before. These are
+              the labels and steps I encountered then; the service may change.
             </p>
+            <ol className="steps">
+              <li>
+                I opened{" "}
+                <a href={LEXMOUNT_URL} target="_blank" rel="noreferrer">
+                  Lexmount Browser
+                </a>
+                , a third-party cloud browser, and registered or signed in to
+                that service.
+              </li>
+              <li>
+                The cloud browser included an “Open Muse.ai” entry. I chose
+                “Run” and signed in to my existing Muse account.
+              </li>
+              <li>
+                I completed the age-verification flow shown by Muse, then sent
+                one message in the web session.
+              </li>
+              <li>
+                I returned to the Muse iOS app with the same account and found I
+                could use it.
+              </li>
+            </ol>
             <p>
               This is one observation about my account on that date. I have not
               established that the browser caused the change, and I have not
@@ -235,7 +260,9 @@ export const CONTENT_PAGES = {
         </section>
 
         <section aria-labelledby="invite-not-registration">
-          <h2 id="invite-not-registration">An invite code is a separate reward step</h2>
+          <h2 id="invite-not-registration">
+            An invite code is a separate reward step
+          </h2>
           <p>
             This directory shares user-provided codes that may be used after
             joining Muse. It does not issue or generate codes, decide who can
@@ -277,7 +304,11 @@ export const CONTENT_PAGES = {
             explain every account-level eligibility decision.
           </p>
           <p>
-            <a href={META_MUSE_ANNOUNCEMENT_URL} target="_blank" rel="noreferrer">
+            <a
+              href={META_MUSE_ANNOUNCEMENT_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Read Meta’s Muse launch announcement
             </a>
             . Check Muse itself for current availability; an older launch notice
@@ -307,7 +338,9 @@ export const CONTENT_PAGES = {
         </section>
 
         <section aria-labelledby="reported-case">
-          <h2 id="reported-case">One owner-reported case is not a region rule</h2>
+          <h2 id="reported-case">
+            One owner-reported case is not a region rule
+          </h2>
           <p>
             The site owner reported one September 28, 2026 experience using a
             third-party cloud browser with an existing waitlisted account; the
@@ -462,8 +495,8 @@ export const CONTENT_PAGES = {
               days.
             </li>
             <li>
-              A feedback subject digest and the current feedback: while the
-              code remains in the system, then up to 90 days after permanent
+              A feedback subject digest and the current feedback: while the code
+              remains in the system, then up to 90 days after permanent
               retirement. Feedback-linked IP/user-agent summaries are removed
               after 30 days.
             </li>
@@ -501,10 +534,10 @@ export const CONTENT_PAGES = {
           <p>
             Visitors in the EEA, United Kingdom, or Switzerland are shown a
             small choice banner. In other recognized regions, analytics defaults
-            to allowed unless a visitor has saved a rejection.
-            If the region cannot be determined, consent remains denied. An
-            explicit rejection is retained for 180 days and takes precedence
-            over a regional default.
+            to allowed unless a visitor has saved a rejection. If the region
+            cannot be determined, consent remains denied. An explicit rejection
+            is retained for 180 days and takes precedence over a regional
+            default.
           </p>
           <p>
             With analytics storage denied, Consent Mode may still send limited
@@ -513,17 +546,18 @@ export const CONTENT_PAGES = {
             individual visitors and is not guaranteed to fill in missing data.
           </p>
           <p>
-            Public-page analytics measures visits and basic
-            actions such as a successful clipboard copy, a submitted feedback
-            result, a code submission result, or a click to Muse. Invite-code
-            text, management links or tokens, visitor digests, raw IP/UA
-            summaries, report text, and contact details are not sent as
-            analytics event data.
+            Public-page analytics measures visits and basic actions such as a
+            successful clipboard copy, a submitted feedback result, a code
+            submission result, or a click to Muse. Invite-code text, management
+            links or tokens, visitor digests, raw IP/UA summaries, report text,
+            and contact details are not sent as analytics event data.
           </p>
         </section>
 
         <section aria-labelledby="privacy-third-parties">
-          <h2 id="privacy-third-parties">Service providers and external links</h2>
+          <h2 id="privacy-third-parties">
+            Service providers and external links
+          </h2>
           <p>
             The site may rely on Cloudflare for hosting and abuse protection,
             Neon for its application database, and Google for public-page
@@ -586,8 +620,8 @@ export const CONTENT_PAGES = {
             platform, region, or time. A sharer-reported remaining amount is not
             live inventory. A “Worked” report reflects what one visitor said;
             “Didn’t work” does not prove that a code is full. The site does not
-            ask for a failure reason and does not claim to know why Muse rejected
-            a code.
+            ask for a failure reason and does not claim to know why Muse
+            rejected a code.
           </p>
           <p>
             Reward windows, token amounts, and per-code use limits mentioned on
@@ -604,11 +638,11 @@ export const CONTENT_PAGES = {
             removed. No review time is promised.
           </p>
           <p>
-            A private management link works like a credential: anyone who has
-            it may be able to manage that submission. Save it somewhere secure
-            and do not post or forward it. If it is lost, the site may not be
-            able to recover it automatically. Do not send it to support unless
-            the support team specifically asks through a verified process.
+            A private management link works like a credential: anyone who has it
+            may be able to manage that submission. Save it somewhere secure and
+            do not post or forward it. If it is lost, the site may not be able
+            to recover it automatically. Do not send it to support unless the
+            support team specifically asks through a verified process.
           </p>
         </section>
 
@@ -618,8 +652,8 @@ export const CONTENT_PAGES = {
             You are responsible for following Muse’s own eligibility and account
             requirements and for using accurate information during verification.
             This independent directory is not affiliated with or endorsed by
-            Meta. External services linked here have their own terms and
-            privacy practices.
+            Meta. External services linked here have their own terms and privacy
+            practices.
           </p>
         </section>
 

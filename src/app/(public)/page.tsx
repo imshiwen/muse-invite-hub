@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { CodePool } from "@/components/code-pool";
 import { initialCodes } from "@/lib/codes";
+import { HomeContext } from "@/components/home-context";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: {
@@ -76,7 +77,7 @@ export default async function Home() {
             <span>
               <Clock3 size={14} /> Redeem within 48 hours of joining Muse*
             </span>
-            <a href="/redeem">
+            <a href="#home-sources">
               *Community-reported rules <Info size={12} />
             </a>
           </div>
@@ -163,7 +164,8 @@ export default async function Home() {
                 <strong>Not on Muse yet?</strong>
                 <p>
                   Reward codes aren’t required to register. Start with the{" "}
-                  <a href="/how-to-register">joining guide</a>.
+                  <a href="/how-to-register">joining guide</a>, or read{" "}
+                  <a href="#home-joining">what worked for me</a>.
                 </p>
               </div>
               <div className="tool-guide-note">
@@ -179,6 +181,7 @@ export default async function Home() {
             </div>
           </aside>
         </div>
+        <HomeContext />
         <section className="tool-faq" aria-labelledby="faq-title">
           <div className="tool-section-heading">
             <h2 id="faq-title">Questions about Muse invite codes</h2>
