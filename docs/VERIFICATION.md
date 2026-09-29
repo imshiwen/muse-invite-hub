@@ -1,6 +1,6 @@
 # 本地验收记录
 
-完成日期：2026-09-29。项目：Muse Invite Hub 本地工作区。实际验证使用本机 PGlite（PostgreSQL 兼容），没有接触 Neon 远程数据，没有发布到正式域名。
+完成日期：2026-09-29。项目：Muse Invite Hub 本地工作区。首版验证使用本机 PGlite（PostgreSQL 兼容）；后续获授权的 Neon 开发库验收见文末。尚未发布到正式域名。
 
 ## 已验证
 
@@ -29,7 +29,7 @@
 
 本地通过不等于外部服务已经接通：
 
-1. Neon 真实分支上的迁移、驱动事务行为与站主码 seed。
+1. Neon 生产分支上的迁移、驱动事务行为与站主码 seed；开发库的初始化和应用读取已于下文单独验证。
 2. Cloudflare 正式域名 DNS/HTTPS、首次发布、真实边缘地区/IP。
 3. Cloudflare Access 单个管理员邮箱 OTP、JWT 配置与退出。已验证的是本机独立管理员会话，不是实际 Cloudflare 账号登录。
 4. Turnstile 真实 widget/Siteverify hostname/action、过期与失败。本机完整流程采用显式 local-only 测试开关；生产路径缺验证码会拒绝提交。
@@ -51,3 +51,11 @@
 2026-09-29 在保持首屏完整邀请码的前提下，接入自托管 Bricolage Grotesque 标题字体、淡紫色点阵背景、具有分隔结构的邀请码行、复制成功反馈和双向奖励说明。品牌 SVG、favicon、Apple 图标及社交分享图同步更新。
 
 本轮 `pnpm check`、17 项测试、完整浏览器流程及 OpenNext 构建通过；本机证据位于 `artifacts/violet-*.log`。验收文件不随 Git 发布，避免把本机日志与临时记录放入仓库。仍未进行云平台发布或远程数据库写入。
+
+## Neon 开发库初始化（2026-09-29）
+
+在站主明确确认的 development 端点完成 `001_initial.sql`：10 张表、码状态视图、业务函数与迁移记录均已回查。导入了 1 个站主码和 4 个社区码，全部为 uncertain，剩余量未知，复制和成功反馈数为 0。随后直接调用网站的 getCodes/getManaged 查询函数，从 Neon 成功读取五个码并验证站主管理凭据只对应 CJ5FU3。
+
+开发凭据与原本本地预览凭据隔离；开发管理路径不指向生产域名。远程 seed 现在要求显式指定 development/production，新增 3 项本地环境隔离检查通过，类型与 lint 检查通过。详细回读证据保存在本机忽略目录 `artifacts/neon-development-verification.json`，未保存密钥值。
+
+本次授权与操作仅覆盖开发库建表和五条初始化记录。生产库、Cloudflare 实际部署、真实验证码、Access 和 GA4 验收仍待完成。本机预览仍使用原本 PGlite 数据，没有被静默切换到远程库。

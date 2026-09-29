@@ -2,11 +2,16 @@ import { createHmac, randomBytes, randomUUID } from 'node:crypto';
 import { chmod, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { Pool } from '@neondatabase/serverless';
+import {
+  ownerTokenFromSavedLink,
+  resolveRemoteSeedTarget,
+  type RemoteSeedEnvironment,
+  type RemoteSeedTarget,
+} from './seed-target';
 
 const OWNER_CODE = 'CJ5FU3';
 const BOOTSTRAP_CODES_FILE = resolve(process.cwd(), 'data/bootstrap-codes.json');
 const LOCAL_LINK_FILE = resolve(process.cwd(), '.local/owner-link.txt');
-const REMOTE_LINK_FILE = resolve(process.cwd(), '.local/production-owner-link.txt');
 
 type BootstrapCode = {
   code: string;
@@ -32,8 +37,8 @@ function managementHash(token: string, key: string): string {
   return createHmac('sha256', key).update(`manage:${token}`).digest('hex');
 }
 
-function actorHash(key: string): string {
-  return createHmac('sha256', key).update('actor:local-owner-seed').digest('hex');
+function actorHash(key: string, environment: 'local' | RemoteSeedEnvironment = 'local'): string {
+  return createHmac('sha256', key).update(`actor:${environment}-owner-seed`).digest('hex');
 }
 
 function curatedActorHash(code: string, key: string): string {
@@ -75,8 +80,8 @@ function validToken(value: string): boolean {
 async function getOrCreateToken(path: string): Promise<string> {
   try {
     const saved = (await readFile(path, 'utf8')).trim();
-    const token = saved.split('/manage/').at(-1) ?? '';
-    if (!validToken(token)) throw new Error(`Saved owner link at ${path} is malformed; it was left untouched.`);
+    const token = ownerTokenFromSavedLink(saved);
+    if (!token || !validToken(token)) throw new Error(`Saved owner link at ${path} is malformed; it was left untouched.`);
     return token;
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
@@ -87,7 +92,8 @@ async function getOrCreateToken(path: string): Promise<string> {
 async function saveOwnerLink(path: string, origin: string, token: string): Promise<void> {
   await mkdir(resolve(process.cwd(), '.local'), { recursive: true, mode: 0o700 });
   await chmod(resolve(process.cwd(), '.local'), 0o700).catch(() => undefined);
-  await writeFile(path, `${origin}/manage/${token}\n`, { mode: 0o600, flag: 'wx' }).catch(async (error: NodeJS.ErrnoException) => {
+  const ownerPath = `${origin}/manage/${token}`;
+  await writeFile(path, `${ownerPath}\n`, { mode: 0o600, flag: 'wx' }).catch(async (error: NodeJS.ErrnoException) => {
     if (error.code !== 'EEXIST') throw error;
     // The file is a credential. Never replace an existing link during a seed retry.
   });
@@ -97,7 +103,7 @@ async function saveOwnerLink(path: string, origin: string, token: string): Promi
 async function ensureSavedLinkMatches(path: string, token: string): Promise<void> {
   try {
     const saved = (await readFile(path, 'utf8')).trim();
-    if ((saved.split('/manage/').at(-1) ?? '') !== token) {
+    if (ownerTokenFromSavedLink(saved) !== token) {
       throw new Error(`The owner link at ${path} belongs to a different token; seed stopped without replacing it.`);
     }
   } catch (error) {
@@ -223,7 +229,12 @@ async function seedLocal(token: string, hmacKey: string, codes: BootstrapCode[])
   console.log(`Local bootstrap seed complete: owner=${ownerOutcome}; community inserted=${community.inserted}, existing=${community.existing}. Inspect the private owner link at ${LOCAL_LINK_FILE}.`);
 }
 
-async function seedNeon(token: string, hmacKey: string, codes: BootstrapCode[]): Promise<void> {
+async function seedNeon(
+  seedTarget: RemoteSeedTarget,
+  token: string,
+  hmacKey: string,
+  codes: BootstrapCode[],
+): Promise<void> {
   if (option('--target') !== 'neon' || !process.argv.includes('--confirm-remote')) {
     throw new Error('Remote seed refused. Review the database target, then pass --target neon --confirm-remote --expected-host <exact-host>.');
   }
@@ -234,17 +245,23 @@ async function seedNeon(token: string, hmacKey: string, codes: BootstrapCode[]):
   if (!database.hostname.endsWith('.neon.tech') || database.hostname !== expectedHost) {
     throw new Error('DATABASE_URL host does not match the reviewed Neon --expected-host.');
   }
-  await ensureSavedLinkMatches(REMOTE_LINK_FILE, token);
+  const ownerLinkFile = resolve(process.cwd(), seedTarget.ownerLinkFile);
+  await ensureSavedLinkMatches(ownerLinkFile, token);
 
   const pool = new Pool({ connectionString: databaseUrl, max: 1 });
   const client = await pool.connect();
   try {
     const owner = codes.find((entry) => entry.source === 'owner');
     if (!owner) throw new Error('Bootstrap data has no owner code.');
-    const ownerOutcome = await seedOwnerCode(client, owner.code, managementHash(token, hmacKey), actorHash(hmacKey));
-    await saveOwnerLink(REMOTE_LINK_FILE, 'https://museinvitehub.org', token);
+    const ownerOutcome = await seedOwnerCode(
+      client,
+      owner.code,
+      managementHash(token, hmacKey),
+      actorHash(hmacKey, seedTarget.environment),
+    );
+    await saveOwnerLink(ownerLinkFile, seedTarget.ownerLinkOrigin, token);
     const community = await seedCommunityCodes(client, codes, hmacKey);
-    console.log(`Neon bootstrap seed complete: owner=${ownerOutcome}; community inserted=${community.inserted}, existing=${community.existing}. Inspect the private owner link at ${REMOTE_LINK_FILE}.`);
+    console.log(`Neon ${seedTarget.environment} bootstrap seed complete: owner=${ownerOutcome}; community inserted=${community.inserted}, existing=${community.existing}. Inspect the private owner link at ${ownerLinkFile}.`);
   } finally {
     client.release();
     await pool.end();
@@ -253,6 +270,9 @@ async function seedNeon(token: string, hmacKey: string, codes: BootstrapCode[]):
 
 async function main(): Promise<void> {
   const target = option('--target');
+  const remoteSeedTarget = target === 'neon'
+    ? resolveRemoteSeedTarget(option('--environment'))
+    : undefined;
   const codes = await loadBootstrapCodes();
   const hmacKey = process.env.APP_HMAC_KEY;
   if (!hmacKey || Buffer.byteLength(hmacKey) < 32) throw new Error('APP_HMAC_KEY must be at least 32 bytes and match the selected app environment.');
@@ -265,7 +285,7 @@ async function main(): Promise<void> {
     if (!process.argv.includes('--confirm-remote')) throw new Error('Remote seed refused; add --confirm-remote only after reviewing the Neon host and branch.');
     const token = process.env.MUSE_OWNER_MANAGE_TOKEN;
     if (!token || !validToken(token)) throw new Error('Remote seed requires a 32-byte base64url MUSE_OWNER_MANAGE_TOKEN supplied through the process environment.');
-    await seedNeon(token, hmacKey, codes);
+    await seedNeon(remoteSeedTarget!, token, hmacKey, codes);
     return;
   }
   throw new Error('Choose an explicit target: --target local or --target neon.');

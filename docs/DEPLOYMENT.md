@@ -1,6 +1,6 @@
 # Muse Invite Hub 部署说明
 
-本文描述本地验证、Neon 分支迁移和 Cloudflare Workers / OpenNext 上线准备。执行 Neon migration、创建平台资源、配置身份权限、绑定域名和首次部署都由站主在自己的账号中手动完成；本次开发没有连接或写入远程数据库，也没有配置 Cloudflare、Turnstile、GA4 或邮件服务。
+本文描述本地验证、Neon 分支迁移和 Cloudflare Workers / OpenNext 上线准备。平台资源创建、身份权限配置、域名绑定及首次部署由站主操作；远程 migration/seed 须针对具体数据库和操作获得许可后执行。2026-09-29 已按站主明确许可完成 Neon 开发库初始化及首批 5 个码导入，并通过应用查询函数回读；生产库尚未操作，Cloudflare、Turnstile、GA4 与邮件服务尚未完成线上核验。
 
 项目按已确认的 Next.js + OpenNext 路线实现。Cloudflare 当前文档把 OpenNext 定位为现有项目适配器，并推荐新项目评估 vinext；这不改变本项目已经确认的选型，只有遇到具体兼容问题时才重新讨论框架。[OpenNext 适配器文档](https://developers.cloudflare.com/workers/framework-guides/web-apps/opennext/)
 
@@ -71,11 +71,12 @@ OpenNext 预览用于检查 Worker 运行时中的 SSR、路由和数据库连�
 
 在 Neon 控制台手动创建项目，并至少保留隔离的开发与生产分支。分别记录每个分支连接串的完整 hostname；本地预览只能连接开发分支。远程 migration 和 seed 会写数据库，不要用生产分支做试运行。
 
-把开发分支连接串放进被忽略的 `.env.neon-dev.local`，例如：
+把开发分支连接串和只供开发环境使用的独立密钥、站主管理 token 放进被忽略的 `.env.neon-dev.local`，例如：
 
 ```dotenv
 DATABASE_URL=从Neon控制台复制的开发分支连接串
 APP_HMAC_KEY=仅开发环境使用的独立随机密钥
+MUSE_OWNER_MANAGE_TOKEN=仅开发环境使用的32字节base64url随机token
 ```
 
 确认 `DATABASE_URL` 指向刚核对的 Neon branch hostname 后，手动应用初始 schema：
@@ -87,7 +88,18 @@ node --env-file=.env.neon-dev.local --import tsx scripts/migrate.ts \
 
 把示例 hostname 替换为连接串中逐字一致的实际 hostname。脚本同时要求 `--target neon`、`--confirm-remote` 和精确 `--expected-host`，且只接受 `*.neon.tech`。它会记录 `001_initial.sql`；已记录的 migration 再运行不会重复应用。这个命令是手动操作步骤，不会由安装、Next 开发服务器、测试、OpenNext 构建或部署触发。
 
-需要在 Neon 准备站主码时，先建立被忽略的 `.env.neon-prod.local`：
+确认 `DATABASE_URL` 指向已核对的开发 branch hostname，并确认 `APP_HMAC_KEY` 与开发 Worker 一致、`MUSE_OWNER_MANAGE_TOKEN` 为开发环境专用后，可显式准备开发环境的 5 个码：
+
+```bash
+node --env-file=.env.neon-dev.local --import tsx scripts/seed.ts \
+  --target neon --environment development --confirm-remote --expected-host ep-development-example.us-east-2.aws.neon.tech
+```
+
+`--environment` 只决定凭据保存位置和环境标记，不会替你选择或验证 Neon 分支；实际目标由 `DATABASE_URL` 与 `--expected-host` 决定。`MUSE_OWNER_MANAGE_TOKEN` 只用于初始化站主记录，不需要配置到 Worker。
+
+将示例 hostname 替换为连接串中逐字一致的实际 hostname。脚本把开发管理路径保存到被忽略的 `.local/neon-development-owner-path.txt`，格式为 `/manage/<token>`，不附加正式域名；开发域名尚未绑定时，这不会生成指向生产站的可点击链接。development 与 production 使用独立的 token 和 `APP_HMAC_KEY`，不要把开发密钥复制到生产配置。
+
+需要在 Neon 准备生产站主码时，先建立被忽略的 `.env.neon-prod.local`：
 
 ```dotenv
 DATABASE_URL=Neon生产分支连接串
@@ -99,10 +111,10 @@ MUSE_OWNER_MANAGE_TOKEN=预先安全生成的32字节base64url随机token
 
 ```bash
 node --env-file=.env.neon-prod.local --import tsx scripts/seed.ts \
-  --target neon --confirm-remote --expected-host ep-production-example.us-east-2.aws.neon.tech
+  --target neon --environment production --confirm-remote --expected-host ep-production-example.us-east-2.aws.neon.tech
 ```
 
-把示例 hostname 替换成连接串中的准确值。脚本不会生成生产站主管理 token；它会把匹配链接写入被忽略的 `.local/production-owner-link.txt`，不把 token 打到终端。生产 seed 最多新写入上述 5 条初始化记录；已有记录会保留，来源冲突时停止。确认写入前须核对目标分支、邀请码和站主管理凭据；此项目不会自动执行该命令。
+把示例 hostname 替换成连接串中的准确值。远程 seed 必须明确传入 `--environment development` 或 `--environment production`，缺失或无效时会在连接 Neon 前拒绝。脚本不会生成站主管理 token；production 会把完整正式链接写入被忽略的 `.local/production-owner-link.txt`，不把 token 打到终端。生产 seed 最多新写入上述 5 条初始化记录；已有记录会保留，来源冲突时停止。确认写入前须核对目标分支、邀请码和站主管理凭据；此项目不会自动执行该命令。
 
 Neon 远程配置完成后，创建仅供 Worker 预览使用的 `.dev.vars`，改为开发 branch URL 与开发环境密钥。若你启用 Cloudflare 环境隔离，应分别为各环境配置完整的变量集合；不要把 `.env.local` 的 HMAC key 用作生产 key。
 
