@@ -1,0 +1,148 @@
+/* Muse exchange: a quiet, dark workspace around bright, readable invitation slips. */
+:root { --relay-night:#10162c; --relay-panel:#19223c; --relay-line:#303d60; --relay-text:#f0f3ff; --relay-muted:#b0bddb; }
+body { background:var(--relay-night); }
+.site-header { height:78px; background:var(--relay-night); border-bottom:1px solid #293452; }
+.header-inner .brand,.site-footer .brand { color:var(--relay-text); }
+.brand span { color:inherit; }
+.desktop-nav,.footer-links { color:#bfcae5; }
+.desktop-nav a:hover,.footer-links a:hover { color:white; }
+.header-inner>.button.header-share { border:1px solid #9892ff; background:#dedaff; color:#252043; box-shadow:none; padding:10px 20px; }
+.header-inner>.button.header-share:hover { background:white; color:#252043; border-color:white; }
+.site-footer { background:#0c1225; color:#e4eaff; border-color:var(--relay-line); }
+.site-footer p,.footer-bottom,.footer-bottom p,.footer-bottom a { color:#aab6d1; }
+.footer-bottom { border-color:#293452; }
+.tool-home { background:radial-gradient(ellipse 55% 24% at 80% 0%,#26325b 0%,transparent 85%),var(--relay-night); color:var(--relay-text); padding-bottom:80px; }
+.tool-container { max-width:1250px; }
+.tool-intro { padding:42px 0 28px; isolation:isolate; }
+.tool-intro h1 { color:var(--relay-text); font-size:clamp(38px,4.4vw,64px); font-weight:650; letter-spacing:-.065em; }
+.heading-dot { color:inherit; }
+.exchange-label { color:#b9c6e9; font-size:12px; margin-bottom:15px; }
+.exchange-symbol { color:#d1caff; background:#303957; border:1px solid #46527b; }
+.tool-title-line { gap:18px; }
+.tool-free { background:transparent; border:1px solid #53617c; color:#c6dacd; transform:none; box-shadow:none; font-size:11px; }
+.tool-intro>p { color:#cad3eb; font-size:17px; margin-top:14px; }
+.tool-reward,.tool-reward>a { color:#aab9d8; font-size:11px; }
+.exchange-orbit { position:absolute; right:6px; top:10px; width:230px; height:105px; opacity:.65; z-index:-1; }
+.tool-workspace { grid-template-columns:minmax(0,1fr) 300px; gap:26px; }
+.tool-pool { background:#f4f7fe; padding:22px; border:1px solid #a5b4d1; border-radius:18px; box-shadow:0 24px 80px #0003; color:#17233e; }
+.tool-pool .pool-toolbar { color:#273652; padding:0 0 18px; min-height:32px; }
+.tool-pool .pool-toolbar strong { font-size:17px; font-weight:600; }
+.pool-count { background:#e5eaf6; color:#445575; border-color:#d2dbeb; border-radius:100px; }
+.tool-pool .code-list { border:1px solid #d8e0ed; border-radius:12px; overflow:hidden; background:#fff; gap:0; }
+.tool-pool .code-row.code-card { border:0; border-bottom:1px solid #e0e6f0; background:#fff; border-radius:0; box-shadow:none; margin:0; }
+.tool-pool .code-row.code-card:last-child { border-bottom:0; }
+.tool-pool .code-row.code-card:hover { background:#f2f5ff; transform:none; box-shadow:none; }
+.tool-pool .code-row-main { min-height:86px; padding:16px 18px; }
+.tool-pool .code-text,.tool-pool .code-full { color:#1b294c; font-size:25px; letter-spacing:.11em; }
+.tool-pool .source-code { color:#61708b; }
+.tool-pool .code-state .status { color:#627089; }
+.tool-pool .code-state .status:before { background:#8294b7; }
+.tool-pool .code-row-actions { background:transparent; border-left:1px solid #e0e6f0; padding:12px; }
+.tool-pool .code-row-actions:before,.tool-pool .code-row-actions:after { display:none; }
+.tool-pool .copy-button { background:#293b70; border:1px solid #293b70; color:white; box-shadow:none; border-radius:7px; min-height:38px; }
+.tool-pool .copy-button:hover { background:#4b4eaf; border-color:#4b4eaf; }
+.tool-pool .icon-button { color:#687997; }
+.tool-pool .pool-controls { color:#52627e; }
+.tool-pool .pool-controls p { color:#63718c; }
+.tool-pool .pool-controls .button { background:white; border-color:#d5deed; color:#34486c; box-shadow:none; }
+.tool-pool .owner-disclosure,.tool-pool-disclaimer { color:#65728a; font-size:11px; }
+.tool-pool .feedback-box,.tool-pool .report-form { background:#edf2fb; color:#243754; }
+.reward-exchange { position:relative; overflow:hidden; border:1px solid #435176; border-radius:16px; background:linear-gradient(130deg,#273458,#1a2441); box-shadow:none; padding:24px; }
+.reward-exchange:after { content:''; position:absolute; width:240px; height:240px; border:1px solid #7184bf40; border-radius:50%; right:-100px; top:-110px; pointer-events:none; }
+.reward-exchange-label { color:#d0d9f2; font-size:12px; }
+.reward-pair { gap:12px; margin:24px 0 18px; }
+.reward-pair strong { color:#e1ddff; font-size:54px; font-weight:550; letter-spacing:-.07em; }
+.reward-pair>div>span { color:#b8c6e5; }
+.reward-connector { background:#303d62; color:#c4bcff; border-color:#58668a; }
+.reward-exchange>p { color:#afbddc; font-size:11px; }
+.share-invite-panel { border:1px solid #3c4a6b; border-radius:16px; background:#1a243e; padding:23px; margin-top:20px; box-shadow:none; }
+.share-invite-panel h2 { color:#f0f3ff; font-size:25px; font-weight:550; }
+.share-invite-panel p,.share-invite-panel>span { color:#afbdd8; }
+.share-invite-panel>.button { background:#dcd7ff; color:#242541; border:0; box-shadow:none; font-weight:750; }
+.share-invite-panel>.button:hover { background:white; }
+.redemption-note { padding:5px 4px; }
+.redemption-note h2 { color:#e0e8fb; font-size:19px; }
+.quick-steps strong { color:#d6e0f6; }
+.quick-steps p { color:#9eadcb; }
+.quick-step-icon { background:#283450; color:#a9b8ef; border-color:#3e4b6b; }
+.tool-guide-link,.tool-guide-note a { color:#cbc4ff; }
+.tool-guide-note { border-color:#33415f; }
+.tool-guide-note strong { color:#dce4f7; }
+.tool-guide-note p { color:#aebbd7; }
+.home-context { border-color:#344260; padding-top:42px; margin-top:44px; }
+.context-grid { gap:50px; }
+.context-block h2,.source-summary h2,.tool-faq h2 { color:#e9efff; font-weight:550; font-size:27px; }
+.context-block p,.context-status-list dd,.source-summary p,.source-summary li { color:#aebbd6; }
+.context-block a,.source-summary a { color:#c9c2ff; }
+.context-status-list dt { color:#d8e3fa; }
+.owner-experience { background:#edf2fc; border:1px solid #c2cde3; border-left:0; border-radius:18px; padding:32px; box-shadow:none; color:#253354; }
+.owner-experience h2 { color:#1f2f51; font-size:32px; font-weight:550; max-width:760px; }
+.owner-experience-heading time { color:#61718d; }
+.experience-badge { background:#dce5f6; color:#465879; border:1px solid #c6d3eb; }
+.experience-start,.experience-start strong,.experience-steps strong { color:#344667; }
+.experience-steps p,.experience-limit { color:#5e6f8c; }
+.experience-step-number { background:#304775; color:white; box-shadow:none; }
+.experience-result { background:#e0eced; color:#395f62; border-color:#c3d8dc; }
+.experience-actions .button { background:#293d70; box-shadow:none; border-color:#293d70; }
+.home-share-invite { background:linear-gradient(115deg,#2e3c63,#272d52); border:1px solid #50608c; border-radius:16px; box-shadow:none; }
+.home-share-invite h2 { color:#edf1ff; font-weight:550; }
+.home-share-invite p,.home-share-invite small,.share-invite-action span { color:#bac7e1; }
+.home-share-invite .button { background:#dad5ff; color:#282443; border:0; box-shadow:none; }
+.source-summary,.tool-faq { border-color:#33415f; }
+.source-lines strong { color:#d7e0f5; }
+.faq-list details { border-color:#33415f; background:transparent; }
+.faq-list summary { color:#dce6fb; }
+.faq-list p { color:#b0bfdc; }
+.tool-section-heading>a { color:#c4bcf8; }
+/* The remaining routes retain light reading surfaces within the same night shell. */
+main:not(.tool-home) { background:#f3f6fc; }
+.form-page-grid { position:relative; }
+.form-intro h1 { color:#1e2b4a; font-weight:600; }
+.form-intro .eyebrow { color:#4b5f95; }
+.form-card { border-color:#c8d4e7; border-radius:18px; box-shadow:0 24px 60px #2639530d; }
+.form-card input,.form-card textarea { border-color:#ccd6e6; background:#f8faff; }
+.form-card .button,.form-card button[type=submit] { background:#293b70; border-color:#293b70; box-shadow:none; }
+.mini-logo { background:#e3eafa; color:#405c95; }
+@media(min-width:1000px) { .tool-guide { display:flex; flex-direction:column; } .redemption-note { margin-top:10px; } .tool-intro h1 { max-width:780px; } }
+@media(max-width:1000px) and (min-width:761px) { .exchange-orbit { display:none; } .tool-workspace { grid-template-columns:minmax(0,1fr) 250px; gap:20px; } .tool-pool { padding:16px; } .tool-pool .code-row-main { padding:12px; } }
+@media(max-width:760px) {
+ .site-header { height:65px; } .header-inner>.button.header-share { padding:8px 12px; font-size:11px; }
+ .tool-intro { padding:25px 0 20px; } .tool-intro h1 { font-size:40px; max-width:340px; } .tool-title-line { gap:10px; }
+ .exchange-orbit { width:110px; height:50px; top:9px; right:0; opacity:.4; }
+ .exchange-label { font-size:10px; margin-bottom:10px; } .tool-free { padding:3px 8px; font-size:10px; }
+ .tool-intro>p { font-size:13px; margin-top:10px; } .tool-reward { gap:6px; margin-top:8px; } .tool-reward,.tool-reward>a { font-size:10px; }
+ .tool-workspace { display:flex; flex-direction:column; gap:26px; }
+ .tool-pool { width:100%; padding:13px; border-radius:13px; } .tool-pool .pool-toolbar { padding-bottom:12px; gap:6px; } .tool-pool .pool-toolbar strong { font-size:13px; } .pool-count { font-size:9px; }
+ .tool-pool .code-row-main { min-height:67px; padding:10px; } .tool-pool .code-text,.tool-pool .code-full { font-size:21px; }
+ .tool-pool .code-row-actions { padding:7px; } .tool-pool .copy-button { min-height:34px; font-size:11px; padding:6px 9px; } .tool-pool .source-code,.tool-pool .code-state .status { font-size:10px; }
+ .tool-pool .pool-controls { padding-top:12px; } .tool-pool .pool-controls .button { font-size:10px; padding:6px 8px; }
+ .tool-guide { width:100%; } .reward-exchange { padding:22px; } .reward-pair strong { font-size:48px; }
+ .share-invite-panel { padding:22px; } .home-context { margin-top:28px; padding-top:30px; }
+ .context-grid { gap:28px; } .context-block h2,.source-summary h2,.tool-faq h2 { font-size:25px; }
+ .owner-experience { padding:22px; } .owner-experience h2 { font-size:27px; } .home-share-invite { padding:24px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; transition:none!important; } }
+.tool-faq .faq-list { max-width:none; }
+.tool-faq .faq-list details { border-color:#33415f; }
+.tool-faq .faq-list summary { color:#dce6fb; }
+.tool-faq .faq-list details p { color:#b0bfdc; }
+.tool-faq .faq-list summary span { color:#a7b6d8; }
+.owner-experience .experience-actions .button { background:#293d70; box-shadow:none; border-color:#293d70; }
+.home-share-invite .share-invite-action .button { background:#dad5ff; color:#282443; border:0; box-shadow:none; }
+@media(min-width:1000px) {
+ .tool-workspace { grid-template-rows:auto auto auto; row-gap:22px; }
+ .tool-pool { grid-column:1; grid-row:1 / span 2; align-self:stretch; }
+ .tool-guide { display:contents; }
+ .reward-exchange { grid-column:2; grid-row:1; margin:0; height:100%; }
+ .share-invite-panel { grid-column:2; grid-row:2; margin:0; height:100%; }
+ .redemption-note { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; gap:18px 36px; padding:24px 2px 0; border-top:1px solid #344260; margin-top:8px; }
+ .redemption-note h2 { grid-column:1 / -1; font-size:21px; margin:0; }
+ .quick-steps { grid-column:1 / -1; display:grid; grid-template-columns:repeat(3,1fr); gap:35px; margin:0; }
+ .quick-steps li { margin:0; }
+ .tool-guide-link { grid-column:1 / -1; margin:0; }
+ .tool-guide-note { padding-top:15px; margin:0; }
+}
+.tool-pool .code-text,.tool-pool .code-full { font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-weight:650; }
+.header-inner .mobile-menu summary { color:#dbe5ff; border-color:#435176; }
+.mobile-menu nav { background:#1a243e; border-color:#435176; color:#e3ebff; }
+.mobile-menu nav a { color:#e3ebff; }

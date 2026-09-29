@@ -81,6 +81,35 @@ export default async function Home() {
               *Community-reported rules <Info size={12} />
             </a>
           </div>
+          <svg
+            className="exchange-orbit"
+            viewBox="0 0 250 110"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="exchange-spectrum" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stopColor="#70a8ff" />
+                <stop offset="1" stopColor="#a78bfa" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M13 70h54c24 0 25-39 51-39h66c21 0 25 24 52 24"
+              fill="none"
+              stroke="url(#exchange-spectrum)"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M13 84h54c18 0 23 13 42 13h74c19 0 30-19 53-19"
+              fill="none"
+              stroke="#8294c5"
+              strokeDasharray="3 6"
+              strokeWidth="1"
+            />
+            <circle cx="13" cy="70" r="5" fill="#10162c" stroke="#83a9ff" strokeWidth="2" />
+            <circle cx="118" cy="31" r="4" fill="#10162c" stroke="#91a2ff" strokeWidth="2" />
+            <circle cx="236" cy="55" r="5" fill="#10162c" stroke="#a78bfa" strokeWidth="2" />
+            <circle cx="183" cy="97" r="3.5" fill="#10162c" stroke="#8c9bd4" strokeWidth="1.5" />
+          </svg>
         </header>
         <div className="tool-workspace">
           <section

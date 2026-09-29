@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/bricolage-grotesque";
 import "./globals.css";
+import "./relay-theme.css";
 import { SITE_URL } from "@/lib/config";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
