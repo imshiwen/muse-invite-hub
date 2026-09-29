@@ -10,7 +10,7 @@ export function Header() {
           <a href="/redeem">How it works</a>
           <a href="/how-to-register">New to Muse?</a>
         </nav>
-        <a className="button button-small button-outline" href="/share">
+        <a className="button button-small header-share" href="/share">
           Share your code <span aria-hidden="true">+</span>
         </a>
         <details className="mobile-menu">

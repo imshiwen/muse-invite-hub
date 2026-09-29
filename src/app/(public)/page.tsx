@@ -123,6 +123,20 @@ export default async function Home() {
                 determined by Muse.
               </p>
             </div>
+            <section
+              className="share-invite-panel"
+              aria-labelledby="share-invite-heading"
+            >
+              <h2 id="share-invite-heading">Have a Muse code?</h2>
+              <p>
+                Share it with the community. When someone successfully redeems
+                it, you may receive tokens too.
+              </p>
+              <a href="/share" className="button">
+                <Plus size={17} /> Share my Muse code
+              </a>
+              <span>Free to share. No account needed here.</span>
+            </section>
             <div className="redemption-note">
               <h2 id="quick-guide-title">Copy here. Redeem in Muse.</h2>
               <ol className="quick-steps">
@@ -175,9 +189,6 @@ export default async function Home() {
                   can <a href="/share">share your own code</a> instead.
                 </p>
               </div>
-              <a href="/share" className="tool-share-link">
-                <Plus size={16} /> Have a code? Pass it on.
-              </a>
             </div>
           </aside>
         </div>

@@ -58,34 +58,98 @@ export function HomeContext() {
         aria-labelledby="owner-experience-heading"
       >
         <div className="owner-experience-heading">
-          <span>Site owner’s experience</span>
+          <span className="experience-badge">
+            Site owner’s first-hand experience
+          </span>
           <time dateTime="2026-09-28">September 28, 2026</time>
         </div>
         <h2 id="owner-experience-heading">
-          What worked for me when joining Muse?
+          How I started using Muse from a waitlisted account
         </h2>
-        <div className="owner-experience-body">
-          <p>
-            I already had a waitlisted Muse account. I opened{" "}
-            <a
-              href="https://browser.lexmount.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Lexmount
-            </a>
-            , a third-party cloud browser, and signed in to the same Muse
-            account. I completed the verification Muse showed and sent a message
-            in the web interface. After that, the same account worked in the iOS
-            app. This was one attempt; I have not repeated the test or
-            established that the browser caused the change.
-          </p>
-        </div>
-        <p className="context-link">
-          <a href="/how-to-register#owner-experience">
-            Read the full account and its limits
-          </a>
+        <p className="experience-start">
+          <strong>Starting point:</strong> My existing Muse account was on the
+          waitlist.
         </p>
+        <ol className="experience-steps">
+          <li>
+            <span className="experience-step-number">1</span>
+            <div>
+              <h3>Open the cloud browser</h3>
+              <p>
+                I opened{" "}
+                <a
+                  href="https://browser.lexmount.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Lexmount
+                </a>
+                , a third-party cloud browser, and chose the entry shown as
+                “Open Muse.ai” → “Run.”
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="experience-step-number">2</span>
+            <div>
+              <h3>Sign in with the same account</h3>
+              <p>
+                I signed in to my existing, waitlisted Muse account and
+                completed the age verification Muse showed.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="experience-step-number">3</span>
+            <div>
+              <h3>Try web, then iOS</h3>
+              <p>
+                I sent one message in Muse on the web, then opened the iOS app
+                with the same account.
+              </p>
+            </div>
+          </li>
+        </ol>
+        <div className="experience-result">
+          <strong>My result</strong>
+          <p>My account was usable in Muse’s iOS app.</p>
+        </div>
+        <p className="experience-limit">
+          This is one result from my account on September 28, 2026. The sequence
+          does not prove the browser caused access, and it is not a guarantee
+          for other people.
+        </p>
+        <div className="experience-actions">
+          <a className="button" href="/how-to-register#owner-experience">
+            Read the full registration steps
+          </a>
+          <a href="/region-limits">Check Muse availability by region</a>
+        </div>
+      </section>
+
+      <section
+        className="home-share-invite"
+        aria-label="Share your Muse invite code"
+      >
+        <div className="share-invite-copy">
+          <h2>Your code could help the next person.</h2>
+          <p>
+            Give someone a token boost—and you could get one too. Community
+            reports describe 1B tokens for each of you after an eligible
+            redemption.
+          </p>
+          <small>
+            Eligibility and rewards follow Muse’s current in-app terms.
+          </small>
+        </div>
+        <div className="share-invite-action">
+          <a className="button" href="/share">
+            Share my Muse code
+          </a>
+          <small>
+            No account needed here. Save your private management link.
+          </small>
+        </div>
       </section>
 
       <section
