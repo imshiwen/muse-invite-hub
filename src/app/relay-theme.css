@@ -146,3 +146,83 @@ main:not(.tool-home) { background:#f3f6fc; }
 .header-inner .mobile-menu summary { color:#dbe5ff; border-color:#435176; }
 .mobile-menu nav { background:#1a243e; border-color:#435176; color:#e3ebff; }
 .mobile-menu nav a { color:#e3ebff; }
+
+/* Readability overrides for the shared shell and public pages. */
+:root { --muted:#52627c; }
+body { font-size:16px; line-height:1.8; }
+.desktop-nav,.footer-links { font-size:14px; }
+button,.button,.text-button { font-size:14px; min-height:40px; }
+.header-inner>.button.header-share { font-size:14px; min-height:40px; }
+.tool-home { color:#bdc9e2; }
+.tool-intro>p,.tool-reward,.tool-reward>a,
+.reward-exchange>p,.share-invite-panel p,.quick-steps p,.tool-guide-note p,
+.tool-home .context-block p,.tool-home .context-status-list dd,
+.tool-home .source-summary p,.tool-home .source-summary li,
+.tool-home .faq-list p,.tool-home .home-share-invite p { color:#bdc9e2; }
+.tool-pool .code-text,.tool-pool .code-full { font-size:26px; }
+.tool-pool .source-code,.tool-pool .code-state .status,.tool-pool .code-date,
+.tool-pool .code-remaining,.tool-pool .pool-controls,.tool-pool .pool-controls p,
+.tool-pool .owner-disclosure,.tool-pool-disclaimer { color:#52627c; font-size:13px; }
+.tool-pool .pool-count,.tool-pool .feedback-heading,.tool-pool .feedback-box p { font-size:13px; }
+.tool-pool .copy-button,.tool-pool .pool-controls .button,
+.tool-pool .feedback-actions button,.tool-pool .icon-button { font-size:14px; min-height:40px; }
+.tool-pool .icon-button { min-width:40px; }
+.exchange-label,.tool-free,.tool-reward,.reward-exchange-label,
+.reward-pair>div>span,.share-invite-panel>span,.tool-guide-link,
+.tool-guide-note strong,.tool-section-heading>a,.context-status-list,
+.owner-experience-heading,.owner-experience .experience-limit,
+.owner-experience .context-link,.home-share-invite small,
+.source-lines strong { font-size:13px; }
+.tool-home .quick-steps strong,.tool-home .context-block p,
+.tool-home .owner-experience-body p,.tool-home .experience-start,
+.tool-home .experience-steps p,.tool-home .source-summary p,
+.tool-home .source-summary .source-lines li,.tool-home .faq-list summary,
+.tool-home .faq-list p { font-size:16px; line-height:1.8; }
+.tool-home .owner-experience .experience-start,
+.tool-home .owner-experience .experience-steps p,
+.tool-home .owner-experience-body p,
+.tool-home .owner-experience .experience-limit,
+.tool-home .owner-experience-heading time,
+.tool-home .owner-experience .context-link { color:#52627c; }
+.tool-home .tool-faq .faq-list summary { line-height:1.7; }
+.tool-home .home-context .experience-actions a.button,
+.tool-home .home-context .home-share-invite a.button,
+.tool-home .home-share-invite .share-invite-action .button { font-size:14px; min-height:40px; }
+@media(max-width:760px) {
+ .header-inner>.button.header-share { font-size:14px; min-height:40px; }
+ .exchange-label,.tool-free,.tool-reward,.reward-exchange-label,
+ .reward-pair>div>span,.share-invite-panel>span,.tool-guide-link,
+ .tool-guide-note strong,.tool-section-heading>a,.context-status-list,
+ .owner-experience-heading,.owner-experience .experience-limit,
+ .owner-experience .context-link,.home-share-invite small,
+ .source-lines strong { font-size:12px; }
+ .tool-pool .code-text,.tool-pool .code-full { font-size:23px; }
+ .tool-pool .copy-button,.tool-pool .pool-controls .button,
+ .tool-pool .feedback-actions button,.tool-pool .icon-button { font-size:14px; min-height:40px; }
+ .tool-pool .icon-button { min-width:40px; }
+ .tool-home .context-block p,.tool-home .owner-experience-body p,
+ .tool-home .experience-start,.tool-home .experience-steps p,
+ .tool-home .source-summary p,.tool-home .source-summary .source-lines li,
+ .tool-home .faq-list summary,.tool-home .faq-list p { font-size:16px; }
+}
+
+.tool-home .reward-exchange>p,.tool-home .share-invite-panel p,
+.tool-home .quick-steps p,.tool-home .tool-guide-note p,
+.tool-home .home-share-invite p { font-size:16px; line-height:1.8; }
+.tool-home .source-summary .source-lines li { color:#bdc9e2; }
+.tool-home .source-summary .source-lines li strong { color:#dce6fb; font-size:15px; }
+.tool-home .share-invite-panel>.button { font-size:14px; }
+.site-footer p,.footer-bottom,.footer-bottom p,.footer-bottom a { font-size:13px; }
+.form-card label,.form-card input,.form-card textarea { font-size:16px; }
+.field-help,.form-fineprint,.feature-list p { font-size:14px; line-height:1.75; }
+@media(max-width:760px) {
+ .tool-container { padding-left:14px; padding-right:14px; }
+ .tool-pool { padding:10px; }
+ .tool-pool .code-row-main { grid-template-columns:minmax(0,1fr) auto; gap:4px 6px; padding:12px 10px; }
+ .tool-pool .code-identity { display:contents; }
+ .tool-pool .code-text { grid-column:1; grid-row:1; }
+ .tool-pool .source-code { grid-column:1 / -1; grid-row:2; margin:0; }
+ .tool-pool .code-state { grid-column:1 / -1; grid-row:3; }
+ .tool-pool .code-row-actions { grid-column:2; grid-row:1; padding:0; border-left:0; gap:3px; }
+ .tool-pool .copy-button svg { display:none; }
+}
