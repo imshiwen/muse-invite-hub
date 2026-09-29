@@ -1,6 +1,6 @@
 # Muse Invite Hub 部署说明
 
-本文描述本地验证、Neon 分支迁移和 Cloudflare Workers / OpenNext 上线准备。平台资源创建、身份权限配置、域名绑定及首次部署由站主操作；远程 migration/seed 须针对具体数据库和操作获得许可后执行。2026-09-29 已按站主明确许可完成 Neon 开发库初始化及首批 5 个码导入，并通过应用查询函数回读；生产库尚未操作，Cloudflare、Turnstile、GA4 与邮件服务尚未完成线上核验。
+本文描述本地验证、Neon 分支迁移和 Cloudflare Workers / OpenNext 上线准备。平台资源创建、身份权限配置、域名绑定及首次部署由站主操作；远程 migration/seed 须针对具体数据库和操作获得许可后执行。实际生产配置与验收状态保存在站主私密本地记录中，不随仓库公开。
 
 项目按已确认的 Next.js + OpenNext 路线实现。Cloudflare 当前文档把 OpenNext 定位为现有项目适配器，并推荐新项目评估 vinext；这不改变本项目已经确认的选型，只有遇到具体兼容问题时才重新讨论框架。[OpenNext 适配器文档](https://developers.cloudflare.com/workers/framework-guides/web-apps/opennext/)
 
@@ -156,6 +156,8 @@ pnpm deploy
 初次操作时需在 Cloudflare 控制台由站主完成 Access identity provider、应用、策略及认证邮箱设置。本文件记录的邮箱只作为后台身份 allowlist，不能显示到公开网页。
 
 ## 4. Turnstile、GA4 和支持联系
+
+本地私密文件 `.env.cloudflare-prod.local` 可用于收集 Turnstile、Access 和 GA4 配置，已被 Git 忽略。创建验证码组件后填写 `NEXT_PUBLIC_TURNSTILE_SITE_KEY` 与 `TURNSTILE_SECRET_KEY`，`TURNSTILE_HOSTNAME` 使用正式域名。写入这个文件不会自动配置 Cloudflare：公开 site key 仍需设置到构建环境，服务端密钥仍需设置到 Worker Secrets。
 
 在 Turnstile 创建针对正式 hostname 的 widget。提交邀请码和替换码使用 action `submit`，举报使用 action `abuse`；hostname 或 action 不匹配、secret 缺失、Siteverify 失败都会拒绝写入。正式 hostname 固定为 `museinvitehub.org`；本地和预览如果需要真实验证，应使用允许相应测试 hostname 的独立 widget。客户端只收到 site key，服务端 secret 不写到 `.env.example` 的实际值或浏览器代码。[Turnstile widget](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/) 与 [Siteverify](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
 
