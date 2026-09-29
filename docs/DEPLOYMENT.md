@@ -71,7 +71,7 @@ OpenNext 预览用于检查 Worker 运行时中的 SSR、路由和数据库连�
 
 在 Neon 控制台手动创建项目，并至少保留隔离的开发与生产分支。分别记录每个分支连接串的完整 hostname；本地预览只能连接开发分支。远程 migration 和 seed 会写数据库，不要用生产分支做试运行。
 
-把开发分支连接串和只供开发环境使用的独立密钥、站主管理 token 放进被忽略的 `.env.neon-dev.local`，例如：
+把开发分支连接串和只供开发环境使用的独立密钥、站主管理 token 放进被忽略的 `.env.dev.local`，例如：
 
 ```dotenv
 DATABASE_URL=从Neon控制台复制的开发分支连接串
@@ -82,7 +82,7 @@ MUSE_OWNER_MANAGE_TOKEN=仅开发环境使用的32字节base64url随机token
 确认 `DATABASE_URL` 指向刚核对的 Neon branch hostname 后，手动应用初始 schema：
 
 ```bash
-node --env-file=.env.neon-dev.local --import tsx scripts/migrate.ts \
+  node --env-file=.env.dev.local --import tsx scripts/migrate.ts \
   --target neon --confirm-remote --expected-host ep-example.us-east-2.aws.neon.tech
 ```
 
@@ -91,7 +91,7 @@ node --env-file=.env.neon-dev.local --import tsx scripts/migrate.ts \
 确认 `DATABASE_URL` 指向已核对的开发 branch hostname，并确认 `APP_HMAC_KEY` 与开发 Worker 一致、`MUSE_OWNER_MANAGE_TOKEN` 为开发环境专用后，可显式准备开发环境的 5 个码：
 
 ```bash
-node --env-file=.env.neon-dev.local --import tsx scripts/seed.ts \
+node --env-file=.env.dev.local --import tsx scripts/seed.ts \
   --target neon --environment development --confirm-remote --expected-host ep-development-example.us-east-2.aws.neon.tech
 ```
 
@@ -99,7 +99,7 @@ node --env-file=.env.neon-dev.local --import tsx scripts/seed.ts \
 
 将示例 hostname 替换为连接串中逐字一致的实际 hostname。脚本把开发管理路径保存到被忽略的 `.local/neon-development-owner-path.txt`，格式为 `/manage/<token>`，不附加正式域名；开发域名尚未绑定时，这不会生成指向生产站的可点击链接。development 与 production 使用独立的 token 和 `APP_HMAC_KEY`，不要把开发密钥复制到生产配置。
 
-需要在 Neon 准备生产站主码时，先建立被忽略的 `.env.neon-prod.local`：
+需要在 Neon 准备生产站主码时，使用被忽略的 `.env.prod.local`：
 
 ```dotenv
 DATABASE_URL=Neon生产分支连接串
@@ -110,7 +110,7 @@ MUSE_OWNER_MANAGE_TOKEN=预先安全生成的32字节base64url随机token
 然后在核对 hostname 和 production branch 后显式运行：
 
 ```bash
-node --env-file=.env.neon-prod.local --import tsx scripts/seed.ts \
+node --env-file=.env.prod.local --import tsx scripts/seed.ts \
   --target neon --environment production --confirm-remote --expected-host ep-production-example.us-east-2.aws.neon.tech
 ```
 
@@ -157,7 +157,7 @@ pnpm deploy
 
 ## 4. Turnstile、GA4 和支持联系
 
-本地私密文件 `.env.cloudflare-prod.local` 可用于收集 Turnstile、Access 和 GA4 配置，已被 Git 忽略。创建验证码组件后填写 `NEXT_PUBLIC_TURNSTILE_SITE_KEY` 与 `TURNSTILE_SECRET_KEY`，`TURNSTILE_HOSTNAME` 使用正式域名。写入这个文件不会自动配置 Cloudflare：公开 site key 仍需设置到构建环境，服务端密钥仍需设置到 Worker Secrets。
+被忽略的 `.env.prod.local` 汇总生产 Neon、Turnstile、Access 和 GA4 配置。创建验证码组件后填写 `NEXT_PUBLIC_TURNSTILE_SITE_KEY` 与 `TURNSTILE_SECRET_KEY`，`TURNSTILE_HOSTNAME` 使用正式域名。写入这个文件不会自动配置 Cloudflare：公开 site key 仍需设置到构建环境，服务端密钥仍需设置到 Worker Secrets。`MUSE_OWNER_MANAGE_TOKEN` 仅用于 seed，不上传到 Worker。
 
 在 Turnstile 创建针对正式 hostname 的 widget。提交邀请码和替换码使用 action `submit`，举报使用 action `abuse`；hostname 或 action 不匹配、secret 缺失、Siteverify 失败都会拒绝写入。正式 hostname 固定为 `museinvitehub.org`；本地和预览如果需要真实验证，应使用允许相应测试 hostname 的独立 widget。客户端只收到 site key，服务端 secret 不写到 `.env.example` 的实际值或浏览器代码。[Turnstile widget](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/) 与 [Siteverify](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
 

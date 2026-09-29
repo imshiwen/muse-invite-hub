@@ -48,6 +48,16 @@ Worker 构建会清理 OpenNext 生成的本地环境 fallback 文件；预览�
 
 `.env.example` 列出本地开发变量。生产数据库连接、HMAC 密钥、Cloudflare Access、Turnstile 私钥和维护密钥应在部署环境的密钥管理中配置；详细步骤见 [部署说明](docs/DEPLOYMENT.md)。GA4 测量 ID 目前待补，不使用假 ID。
 
+环境文件按环境使用：`.env.local` 用于本机 PGlite 预览，`.env.dev.local` 用于远程开发，`.env.prod.local` 合并生产 Neon、Turnstile、Access 与 GA4 配置。Next.js 不会自动读取 `.env.dev.local` 或 `.env.prod.local`，需通过 `--env-file` 显式加载；本地文件不会自动同步到 Cloudflare，`MUSE_OWNER_MANAGE_TOKEN` 仅供 seed 使用，不上传 Worker。
+
 ## 数据与部署
 
 远程 Neon migration 和 seed 都需要显式指定目标、确认远程写入并核对完整主机名。脚本不会由 `pnpm dev`、Worker 构建或部署流程自动触发。Cloudflare 账号连接、Access 策略、Turnstile 站点、域名绑定、首次部署及生产数据库写入由站主手动完成。
+
+## 本地配置文件
+
+- `.env.local`：本机预览。
+- `.env.dev.local`：远程开发环境。
+- `.env.prod.local`：生产环境，统一填写 Neon、Turnstile、Access 和 GA4。
+
+后两份采用自定义名称，Next.js 不会自动加载；运行数据库脚本时使用 `--env-file` 显式指定。所有实际配置文件均不提交 Git，也不会自动同步 Cloudflare。`MUSE_OWNER_MANAGE_TOKEN` 仅供初始化使用，不上传到 Worker。
