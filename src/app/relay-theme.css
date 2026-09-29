@@ -25,9 +25,9 @@ body { background:var(--relay-night); }
 .exchange-orbit { position:absolute; right:6px; top:10px; width:230px; height:105px; opacity:.65; z-index:-1; }
 .tool-workspace { grid-template-columns:minmax(0,1fr) 300px; gap:26px; }
 .tool-pool { background:#f4f7fe; padding:22px; border:1px solid #a5b4d1; border-radius:18px; box-shadow:0 24px 80px #0003; color:#17233e; }
-.tool-pool .pool-toolbar { color:#273652; padding:0 0 18px; min-height:32px; }
-.tool-pool .pool-toolbar strong { font-size:17px; font-weight:600; }
-.pool-count { background:#e5eaf6; color:#445575; border-color:#d2dbeb; border-radius:100px; }
+.tool-pool .pool-toolbar { color:#273652; padding:18px 20px; background:#edf2fa; border-bottom:1px solid #d8e0ed; min-height:64px; }
+.tool-pool .pool-toolbar strong { font-size:18px; line-height:1.4; font-weight:600; }
+.pool-count { background:#fff; color:#445575; border:1px solid #d1dbeb; border-radius:6px; padding:4px 10px; font-size:13px; box-shadow:none; }
 .tool-pool .code-list { border:1px solid #d8e0ed; border-radius:12px; overflow:hidden; background:#fff; gap:0; }
 .tool-pool .code-row.code-card { border:0; border-bottom:1px solid #e0e6f0; background:#fff; border-radius:0; box-shadow:none; margin:0; }
 .tool-pool .code-row.code-card:last-child { border-bottom:0; }
@@ -112,7 +112,7 @@ main:not(.tool-home) { background:#f3f6fc; }
  .exchange-label { font-size:10px; margin-bottom:10px; } .tool-free { padding:3px 8px; font-size:10px; }
  .tool-intro>p { font-size:13px; margin-top:10px; } .tool-reward { gap:6px; margin-top:8px; } .tool-reward,.tool-reward>a { font-size:10px; }
  .tool-workspace { display:flex; flex-direction:column; gap:26px; }
- .tool-pool { width:100%; padding:13px; border-radius:13px; } .tool-pool .pool-toolbar { padding-bottom:12px; gap:6px; } .tool-pool .pool-toolbar strong { font-size:13px; } .pool-count { font-size:9px; }
+ .tool-pool { width:100%; padding:13px; border-radius:13px; } .tool-pool .pool-toolbar { padding:14px 12px; min-height:60px; gap:10px; flex-wrap:wrap; } .tool-pool .pool-toolbar strong { font-size:15px; } .tool-pool .pool-count { font-size:12px; }
  .tool-pool .code-row-main { min-height:67px; padding:10px; } .tool-pool .code-text,.tool-pool .code-full { font-size:21px; }
  .tool-pool .code-row-actions { padding:7px; } .tool-pool .copy-button { min-height:34px; font-size:11px; padding:6px 9px; } .tool-pool .source-code,.tool-pool .code-state .status { font-size:10px; }
  .tool-pool .pool-controls { padding-top:12px; } .tool-pool .pool-controls .button { font-size:10px; padding:6px 8px; }
@@ -163,7 +163,7 @@ button,.button,.text-button { font-size:14px; min-height:40px; }
 .tool-pool .source-code,.tool-pool .code-state .status,.tool-pool .code-date,
 .tool-pool .code-remaining,.tool-pool .pool-controls,.tool-pool .pool-controls p,
 .tool-pool .owner-disclosure,.tool-pool-disclaimer { color:#52627c; font-size:13px; }
-.tool-pool .pool-count,.tool-pool .feedback-heading,.tool-pool .feedback-box p { font-size:13px; }
+.tool-pool .feedback-heading,.tool-pool .feedback-box p { font-size:13px; }
 .tool-pool .copy-button,.tool-pool .pool-controls .button,
 .tool-pool .feedback-actions button,.tool-pool .icon-button { font-size:14px; min-height:40px; }
 .tool-pool .icon-button { min-width:40px; }
