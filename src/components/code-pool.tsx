@@ -358,7 +358,11 @@ export function CodePool({ initial }: { initial: CodePage }) {
       <div className="code-list" aria-label="Available invite codes">
         <div className="pool-toolbar" aria-live="polite">
           <strong>Pick a code. It’s yours to copy.</strong>
-          <span className="pool-count">{data.codes.length} shared codes</span>
+          <span className="pool-count">
+            {data.total === null
+              ? "Code count unavailable"
+              : `${data.total} shared ${data.total === 1 ? "code" : "codes"}`}
+          </span>
         </div>
         {data.codes.map((code) => (
           <CodeCard key={code.id} code={code} />

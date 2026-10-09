@@ -27,19 +27,51 @@ export async function getCodes(
     Math.abs(parsed.slot - Math.floor(Date.now() / 300000)) > 12
   )
     throw new Error("INVALID_CURSOR");
-  const rows = await query<PublicCode>(
-    `SELECT ${fields} FROM code_state WHERE moderation IN ('approved','needs_review') AND status = ANY($1::text[]) ORDER BY CASE status WHEN 'active' THEN 0 ELSE 1 END, md5(id::text || $2),id LIMIT $3 OFFSET $4`,
+  const rows = await query<{
+    total: number;
+    codes: PublicCode[];
+    has_more: boolean;
+  }>(
+    `WITH filtered AS MATERIALIZED (
+       SELECT ${fields}
+       FROM code_state
+       WHERE moderation IN ('approved','needs_review') AND status = ANY($1::text[])
+     ), page AS MATERIALIZED (
+       SELECT * FROM filtered
+       ORDER BY CASE status WHEN 'active' THEN 0 ELSE 1 END, md5(id::text || $2), id
+       LIMIT $3 OFFSET $4
+     ), page_result AS (
+       SELECT
+         COALESCE(
+           json_agg(
+             to_jsonb(page)
+             ORDER BY CASE page.status WHEN 'active' THEN 0 ELSE 1 END,
+               md5(page.id::text || $2), page.id
+           ) FILTER (WHERE page.id IS NOT NULL),
+           '[]'::json
+         ) AS codes,
+         COUNT(page.id)::int > $5::int AS has_more
+       FROM (SELECT 1) AS anchor
+       LEFT JOIN page ON true
+     )
+     SELECT (SELECT COUNT(*)::int FROM filtered) AS total, page_result.codes, page_result.has_more
+     FROM page_result`,
     [
       group === "issues" ? ["likely_unavailable"] : ["active", "uncertain"],
       String(parsed.slot),
       limit + 1,
       parsed.offset,
+      limit,
     ],
   );
+  const page = rows[0];
+  if (!page) throw new Error("DATABASE_ERROR");
+  const codes = page.codes;
   return {
-    codes: rows.slice(0, limit),
+    codes: codes.slice(0, limit),
+    total: page.total,
     cursor:
-      rows.length > limit
+      page.has_more
         ? Buffer.from(
             JSON.stringify({
               slot: parsed.slot,
@@ -53,7 +85,7 @@ export async function initialCodes(): Promise<CodePage> {
   try {
     return await getCodes();
   } catch {
-    return { codes: [], cursor: null, unavailable: true };
+    return { codes: [], cursor: null, total: null, unavailable: true };
   }
 }
 export async function getPublicCode(id: string) {

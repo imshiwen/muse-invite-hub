@@ -21,5 +21,6 @@ export type ManagedCode = PublicCode & {
 export type CodePage = {
   codes: PublicCode[];
   cursor: string | null;
+  total: number | null;
   unavailable?: boolean;
 };
