@@ -108,7 +108,7 @@ export function ShareForm() {
         </h2>
         <p>
           {result.moderation === "approved"
-            ? "Your code has been added to the community pool."
+            ? "Your code has been added. It may take up to 15 minutes to appear in the public list."
             : "We received your code. It will appear after review; you can check its status using your private link."}
         </p>
         <div className="save-link-box">

@@ -180,3 +180,13 @@ GA4 数据流的增强型衡量需核对：本项目自己发送 page_view，不
 - GA4 仅在有真实测量 ID 的公开正式页加载；Consent Mode 默认状态和地区提示与隐私说明一致，管理路径不发送 GA4 请求。
 - `https://museinvitehub.org/contact` 显示 `support@museinvitehub.org`，并实际测试该邮箱收信。
 - 生产数据库 branch、域名/DNS/TLS、Access 策略、Turnstile 状态、GA4 和邮箱收件分别记录为“已配置”“已核对”或“已验证”；未知项保持待验证。
+
+## 公开码池缓存与 Neon 用量
+
+生产 Worker 使用 Cloudflare Cache API 保存公开邀请码快照，TTL 为 900 秒。首页 SSR 和列表接口从同一快照分页，主列表与问题码共用缓存；总数不会随展开条数变化。缓存按访问触发加载，没有新增定时刷新任务，也无需新增 KV 或 R2 绑定。
+
+缓存键固定，不含请求参数、访客 Cookie、IP 或管理凭据。仅缓存公开字段；后台、管理链接、写入操作和地区同意响应不进入该缓存。列表接口命中快照时不执行 Neon 查询，也不执行数据库限流写入；未命中或非缓存环境仍保留相应限流检查。公开 API 的 HTTP 响应仍是 private/no-store，内部数据快照缓存与浏览器响应缓存分开处理。
+
+投稿、反馈、暂停和审核在数据库中即时完成，管理页读取实时状态；公共列表可能延迟最多约 15 分钟反映变化。刷新按钮重新读取有效快照，不强制唤醒数据库。快照过期后的旧分页游标需要刷新列表重开，避免跨快照重复或遗漏。数据库查询失败不会被缓存成空池。
+
+发布后可通过列表接口的 `X-Code-Cache` 响应头核对 HIT/MISS/BYPASS，连续请求及分页应复用有效快照。Cloudflare Cache API 的内容按数据中心保存且可能被提前驱逐，并非全球唯一缓存，因此不能保证整个站点每 15 分钟只访问一次 Neon，也不能承诺一定不超过免费额度。应观察 Neon 后续计算时长增速，而不是仅根据请求数估算。[Cloudflare Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/)

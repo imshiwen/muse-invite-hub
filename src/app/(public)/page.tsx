@@ -124,7 +124,7 @@ export default async function Home() {
             </p>
             <p className="tool-pool-disclaimer">
               Codes are shared publicly and may be used elsewhere. A listing
-              doesn’t guarantee a successful redemption.
+              doesn’t guarantee a successful redemption. Public listings may take up to 15 minutes to update.
             </p>
           </section>
           <aside className="tool-guide" aria-labelledby="quick-guide-title">

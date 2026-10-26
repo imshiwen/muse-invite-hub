@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { apiJson, errorResponse } from "@/lib/api-errors";
 import { configuredLimit, enforceRateLimit } from "@/lib/api-common";
-import { getCodes } from "@/lib/codes";
+import { getCodesWithCache } from "@/lib/codes";
 import { getTrustedClientIp, ipHash } from "@/lib/security";
 
 const querySchema = z.object({
@@ -27,14 +27,19 @@ export async function GET(request: Request) {
         { error: "The request could not be verified. Please try again later." },
         503,
       );
-    await enforceRateLimit(
-      `rl:list:${await ipHash(ip)}`,
-      configuredLimit("RATE_LIMIT_LIST_PER_MINUTE", 60),
-      60,
+    const result = await getCodesWithCache(
+      parsed.data.group, parsed.data.limit, parsed.data.cursor,
+      { beforeLoad: async () => {
+        await enforceRateLimit(
+          `rl:list:${await ipHash(ip)}`,
+          configuredLimit("RATE_LIMIT_LIST_PER_MINUTE", 60), 60,
+        );
+      } },
     );
-    return apiJson(
-      await getCodes(parsed.data.group, parsed.data.limit, parsed.data.cursor),
-    );
+    return apiJson(result.page, 200, {
+      "X-Code-Cache": result.cache.status,
+      ...(result.cache.ageSeconds === undefined ? {} : { "X-Code-Cache-Age": String(result.cache.ageSeconds) }),
+    });
   } catch (error) {
     return errorResponse(error);
   }
